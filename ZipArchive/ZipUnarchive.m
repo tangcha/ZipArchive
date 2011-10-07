@@ -42,13 +42,13 @@
 
 - (void)dealloc {
     [_password release];
+    [_delegate release];
     unzClose( _unzFile );
     [super dealloc];
 }
 
--(BOOL) UnzipFileTo:(NSString*) path overWrite:(BOOL) overwrite
-{
-	BOOL success = YES;
+- (BOOL)unzipSelectedFiles:(NSSet *)selectedFilesSet toPath:(NSString *)path overwrite:(BOOL)shouldOverwrite {
+    BOOL success = YES;
 	int ret = unzGoToFirstFile( _unzFile );
 	unsigned char		buffer[4096] = {0};
 	NSFileManager* fman = [NSFileManager defaultManager];
@@ -99,7 +99,7 @@
 			[fman createDirectoryAtPath:fullPath withIntermediateDirectories:YES attributes:nil error:nil];
 		else
 			[fman createDirectoryAtPath:[fullPath stringByDeletingLastPathComponent] withIntermediateDirectories:YES attributes:nil error:nil];
-		if( [fman fileExistsAtPath:fullPath] && !isDirectory && !overwrite )
+		if( [fman fileExistsAtPath:fullPath] && !isDirectory && !shouldOverwrite )
 		{
 			if( ![self OverWrite:fullPath] )
 			{
@@ -108,52 +108,60 @@
 				continue;
 			}
 		}
-		FILE* fp = fopen( (const char*)[fullPath UTF8String], "wb");
-		while( fp )
-		{
-			read=unzReadCurrentFile(_unzFile, buffer, 4096);
-			if( read > 0 )
-			{
-				fwrite(buffer, read, 1, fp );
-			}
-			else if( read<0 )
-			{
-				[self OutputErrorMessage:@"Failed to reading zip file"];
-				break;
-			}
-			else 
-				break;				
-		}
-		if( fp )
-		{
-			fclose( fp );
-			// set the orignal datetime property
-			if( fileInfo.dosDate!=0 )
-			{
-				NSDate* orgDate = [[NSDate alloc] 
-								   initWithTimeInterval:(NSTimeInterval)fileInfo.dosDate 
-								   sinceDate:[self Date1980] ];
+        if (selectedFilesSet == nil ||
+            (selectedFilesSet != nil && [selectedFilesSet containsObject:strPath])) {
+            FILE* fp = fopen( (const char*)[fullPath UTF8String], "wb");
+            while( fp )
+            {
+                read=unzReadCurrentFile(_unzFile, buffer, 4096);
+                if( read > 0 )
+                {
+                    fwrite(buffer, read, 1, fp );
+                }
+                else if( read<0 )
+                {
+                    [self OutputErrorMessage:@"Failed to reading zip file"];
+                    break;
+                }
+                else 
+                    break;				
+            }
+            if( fp )
+            {
+                fclose( fp );
+                // set the orignal datetime property
+                if( fileInfo.dosDate!=0 )
+                {
+                    NSDate* orgDate = [[NSDate alloc] 
+                                       initWithTimeInterval:(NSTimeInterval)fileInfo.dosDate 
+                                       sinceDate:[self Date1980] ];
+                    
+                    NSDictionary* attr = [NSDictionary dictionaryWithObject:orgDate forKey:NSFileModificationDate]; //[[NSFileManager defaultManager] fileAttributesAtPath:fullPath traverseLink:YES];
+                    if( attr )
+                    {
+                        //	[attr  setValue:orgDate forKey:NSFileCreationDate];
+                        if( ![[NSFileManager defaultManager] setAttributes:attr ofItemAtPath:fullPath error:nil] )
+                        {
+                            // cann't set attributes 
+                            NSLog(@"Failed to set attributes");
+                        }
+                        
+                    }
+                    [orgDate release];
+                    orgDate = nil;
+                }
                 
-				NSDictionary* attr = [NSDictionary dictionaryWithObject:orgDate forKey:NSFileModificationDate]; //[[NSFileManager defaultManager] fileAttributesAtPath:fullPath traverseLink:YES];
-				if( attr )
-				{
-                    //	[attr  setValue:orgDate forKey:NSFileCreationDate];
-					if( ![[NSFileManager defaultManager] setAttributes:attr ofItemAtPath:fullPath error:nil] )
-					{
-						// cann't set attributes 
-						NSLog(@"Failed to set attributes");
-					}
-					
-				}
-				[orgDate release];
-				orgDate = nil;
-			}
-			
-		}
+            }
+        }
 		unzCloseCurrentFile( _unzFile );
 		ret = unzGoToNextFile( _unzFile );
 	}while( ret==UNZ_OK && UNZ_OK!=UNZ_END_OF_LIST_OF_FILE );
 	return success;
+}
+
+- (BOOL)unzipAllFilesToPath:(NSString *)path overwrite:(BOOL)shouldOverwrite
+{
+	return [self unzipSelectedFiles:nil toPath:path overwrite:shouldOverwrite];
 }
 
 #pragma mark wrapper for delegate
