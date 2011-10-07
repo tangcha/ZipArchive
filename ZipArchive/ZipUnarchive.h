@@ -7,7 +7,22 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ZipArchive.h"
 
-@interface ZipUnarchive : NSObject
+@interface ZipUnarchive : NSObject {
+@private
+	zipFile		_zipFile;
+	unzFile		_unzFile;
+	
+	NSString*   _password;
+	id			_delegate;
+}
+
+@property (nonatomic, retain) id delegate;
+
+-(BOOL) UnzipOpenFile:(NSString*) zipFile;
+-(BOOL) UnzipOpenFile:(NSString*) zipFile Password:(NSString*) password;
+-(BOOL) UnzipFileTo:(NSString*) path overWrite:(BOOL) overwrite;
+-(BOOL) UnzipCloseFile;
 
 @end
