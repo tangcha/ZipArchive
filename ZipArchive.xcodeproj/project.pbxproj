@@ -65,6 +65,7 @@
 		04FCB0AE143EE55300DB6D81 /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
 		04FCB0B9143EE6C700DB6D81 /* ZipUnarchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipUnarchive.h; sourceTree = "<group>"; };
 		04FCB0BA143EE6C700DB6D81 /* ZipUnarchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipUnarchive.m; sourceTree = "<group>"; };
+		04FCB0BD143EEE3700DB6D81 /* Example.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = Example.zip; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +144,7 @@
 		04754E00143EE09500D9EC72 /* ZipArchiveTests */ = {
 			isa = PBXGroup;
 			children = (
+				04FCB0BD143EEE3700DB6D81 /* Example.zip */,
 				04754E06143EE09500D9EC72 /* ZipArchiveTests.h */,
 				04754E07143EE09500D9EC72 /* ZipArchiveTests.m */,
 				04754E01143EE09500D9EC72 /* Supporting Files */,
