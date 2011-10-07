@@ -8,6 +8,14 @@
 
 #import "ZipUnarchive.h"
 
+@interface ZipUnarchive ()
+
+-(void) OutputErrorMessage:(NSString*) msg;
+-(BOOL) OverWrite:(NSString*) file;
+-(NSDate*) Date1980;
+
+@end
+
 @implementation ZipUnarchive
 
 @synthesize delegate = _delegate;
