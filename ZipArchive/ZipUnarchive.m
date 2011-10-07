@@ -12,24 +12,30 @@
 
 @synthesize delegate = _delegate;
 
--(BOOL) UnzipOpenFile:(NSString*) zipFile
-{
-	_unzFile = unzOpen( (const char*)[zipFile UTF8String] );
-	if( _unzFile )
-	{
-		unz_global_info  globalInfo = {0};
-		if( unzGetGlobalInfo(_unzFile, &globalInfo )==UNZ_OK )
-		{
-			NSLog(@"%d entries in the zip file",globalInfo.number_entry);
-		}
-	}
-	return _unzFile!=NULL;
+- (id)initWithContentsOfFile:(NSString *)path {
+    return [self initWithContentsOfFile:path usingPassword:nil];
 }
 
--(BOOL) UnzipOpenFile:(NSString*) zipFile Password:(NSString*) password
-{
-	_password = password;
-	return [self UnzipOpenFile:zipFile];
+- (id)initWithContentsOfFile:(NSString *)path usingPassword:(NSString *)password {
+    self = [super init];
+    if (self) {
+        _unzFile = unzOpen( (const char*)[path UTF8String] );
+        if( _unzFile )
+        {
+            unz_global_info  globalInfo = {0};
+            if( unzGetGlobalInfo(_unzFile, &globalInfo )==UNZ_OK )
+            {
+//                NSLog(@"%ul entries in the zip file", globalInfo.number_entry);
+            }
+        }
+    }
+    return self;
+}
+
+- (void)dealloc {
+    [_password release];
+    unzClose( _unzFile );
+    [super dealloc];
 }
 
 -(BOOL) UnzipFileTo:(NSString*) path overWrite:(BOOL) overwrite
@@ -140,14 +146,6 @@
 		ret = unzGoToNextFile( _unzFile );
 	}while( ret==UNZ_OK && UNZ_OK!=UNZ_END_OF_LIST_OF_FILE );
 	return success;
-}
-
--(BOOL) UnzipCloseFile
-{
-	_password = nil;
-	if( _unzFile )
-		return unzClose( _unzFile )==UNZ_OK;
-	return YES;
 }
 
 #pragma mark wrapper for delegate
