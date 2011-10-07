@@ -25,6 +25,8 @@
 		04FCB0B6143EE55300DB6D81 /* unzip.h in Headers */ = {isa = PBXBuildFile; fileRef = 04FCB0AC143EE55300DB6D81 /* unzip.h */; };
 		04FCB0B7143EE55300DB6D81 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 04FCB0AD143EE55300DB6D81 /* zip.c */; };
 		04FCB0B8143EE55300DB6D81 /* zip.h in Headers */ = {isa = PBXBuildFile; fileRef = 04FCB0AE143EE55300DB6D81 /* zip.h */; };
+		04FCB0BB143EE6C700DB6D81 /* ZipUnarchive.h in Headers */ = {isa = PBXBuildFile; fileRef = 04FCB0B9143EE6C700DB6D81 /* ZipUnarchive.h */; };
+		04FCB0BC143EE6C700DB6D81 /* ZipUnarchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FCB0BA143EE6C700DB6D81 /* ZipUnarchive.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +63,8 @@
 		04FCB0AC143EE55300DB6D81 /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unzip.h; sourceTree = "<group>"; };
 		04FCB0AD143EE55300DB6D81 /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
 		04FCB0AE143EE55300DB6D81 /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
+		04FCB0B9143EE6C700DB6D81 /* ZipUnarchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipUnarchive.h; sourceTree = "<group>"; };
+		04FCB0BA143EE6C700DB6D81 /* ZipUnarchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipUnarchive.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +125,8 @@
 				04FCB0A3143EE55300DB6D81 /* minizip */,
 				04754DEF143EE09500D9EC72 /* ZipArchive.h */,
 				04754E18143EE0F300D9EC72 /* ZipArchive.m */,
+				04FCB0B9143EE6C700DB6D81 /* ZipUnarchive.h */,
+				04FCB0BA143EE6C700DB6D81 /* ZipUnarchive.m */,
 				04754DED143EE09500D9EC72 /* Supporting Files */,
 			);
 			path = ZipArchive;
@@ -183,6 +189,7 @@
 				04FCB0B4143EE55300DB6D81 /* mztools.h in Headers */,
 				04FCB0B6143EE55300DB6D81 /* unzip.h in Headers */,
 				04FCB0B8143EE55300DB6D81 /* zip.h in Headers */,
+				04FCB0BB143EE6C700DB6D81 /* ZipUnarchive.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,6 +296,7 @@
 				04FCB0B3143EE55300DB6D81 /* mztools.c in Sources */,
 				04FCB0B5143EE55300DB6D81 /* unzip.c in Sources */,
 				04FCB0B7143EE55300DB6D81 /* zip.c in Sources */,
+				04FCB0BC143EE6C700DB6D81 /* ZipUnarchive.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
