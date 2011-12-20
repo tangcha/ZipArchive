@@ -164,6 +164,15 @@
 	return [self unzipSelectedFiles:nil toPath:path overwrite:shouldOverwrite];
 }
 
+- (void)unzipAllFilesToPath:(NSString *)path overwrite:(BOOL)shouldOverwrite completion:(void (^)(NSString * path))completion {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul), ^{
+        BOOL result = [self unzipAllFilesToPath:path overwrite:shouldOverwrite];
+        if (result) {
+            completion(path);
+        }
+    });
+}
+
 #pragma mark wrapper for delegate
 -(void) OutputErrorMessage:(NSString*) msg
 {

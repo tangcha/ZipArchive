@@ -24,5 +24,6 @@
 - (id)initWithContentsOfFile:(NSString *)path usingPassword:(NSString *)password;
 - (BOOL)unzipAllFilesToPath:(NSString *)path overwrite:(BOOL)shouldOverwrite;
 - (BOOL)unzipSelectedFiles:(NSSet *)selectedFilesSet toPath:(NSString *)path overwrite:(BOOL)shouldOverwrite;
+- (void)unzipAllFilesToPath:(NSString *)path overwrite:(BOOL)shouldOverwrite completion:(void (^)(NSString * path))completion;
 
 @end
